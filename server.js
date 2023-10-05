@@ -15,6 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // middleware to modularize api routes
+// api base, first piece
+// http://localhost:3001/api
 app.use('/api', api);
 
 // middleware to make homepage url http://localhost:3001 public
