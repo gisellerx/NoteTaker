@@ -13,23 +13,24 @@ notes.get('/', (req, res) => {
 });
 
 // DELETE Route for a specific tip
-notes.delete('/:tip_id', (req, res) => {
-  const tipId = req.params.tip_id;
+notes.delete('/:id', (req, res) => {
+  const noteId = req.params.id;
   readFromFile('./db/db.json')
     .then((data) => JSON.parse(data))
     .then((json) => {
       // Make a new array of all notes except the one with the ID provided in the URL
-      const result = json.filter((tip) => tip.tip_id !== tipId);
+      const result = json.filter((note) => note.id !== noteId);
 
       // Save that array to the filesystem
       writeToFile('./db/db.json', result);
 
       // Respond to the DELETE request
-      res.json(`Item ${tipId} has been deleted 🗑️`);
+      res.json(`Item ${noteId} has been deleted 🗑️`);
     });
 });
 
 // POST Route for a new UX/UI tip
+// api endpoint http://localhost:3001/api/notes/
 notes.post('/', (req, res) => {
   console.log(req.body);
 
@@ -45,7 +46,7 @@ notes.post('/', (req, res) => {
   const parsedData = readAndAppend(newNote, './db/db.json');
     res.json(parsedData);
   } else {
-    res.error('Error in adding tip');
+    res.error('Error in adding note');
   }
 });
 
